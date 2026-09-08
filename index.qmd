@@ -1,0 +1,17 @@
+---
+title: "E155 Portfolio"
+image: images/headshot.jpeg
+about:
+    template: jolla
+    links:
+        - icon: linkedin
+          text: LinkedIn
+          href: https://www.linkedin.com/in/kathy-guo-/
+        - icon: github
+          text: Github
+          href: https://github.com/kathy-guo811
+        - icon: envelope-fill
+          text: Email
+          href: mailto:kaguo@g.hmc.edu
+---
+Hello! I'm Kathy Guo, an engineering major at [Harvey Mudd College](https://hmc.edu). My academic interest lies within robotics and human-centered design. Outside of the classroom, you can find me woodworking, making matcha, cafe hopping, and hiking!
