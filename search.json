@@ -4,7 +4,14 @@
     "href": "blog.html",
     "title": "E155 Blog",
     "section": "",
-    "text": "Hello Quarto\n\n\nWelcome to my Quarto portfolio\n\n\n\n\n\nAug 31, 2026\n\n\nKathy Guo\n\n\n\n\n\nNo matching items"
+    "text": "Initial Reflection\n\n\nMy goals this semester for MicroPs\n\n\n\n\n\nAug 31, 2026\n\n\nKathy Guo\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/first-post.html",
+    "href": "posts/first-post.html",
+    "title": "Initial Reflection",
+    "section": "",
+    "text": "This semester, I want to become more comfortable working with microcontrollers and embedded systems. I hope to improve my ability to connect hardware and software and understand how the two interact.\nOne of my goals is to become more confident in debugging circuits and writing firmware. I also want to improve my time management skills and learn how to set realistic milestones for larger projects. I hope that by the end of the semester, I will be better at breaking down complex projects into manageable steps and staying on track throughout the process.\nBy the end of the semester, I hope to have a stronger understanding of embedded systems and be able to build and troubleshoot projects more independently."
   },
   {
     "objectID": "index.html",
@@ -14,10 +21,45 @@
     "text": "Hello! I’m Kathy Guo, an engineering major at Harvey Mudd College. My academic interest lies within robotics and human-centered design. Outside of the classroom, you can find me woodworking, making matcha, cafe hopping, and hiking!"
   },
   {
-    "objectID": "resources.html",
-    "href": "resources.html",
-    "title": "E155 Resources",
-    "section": "",
-    "text": "Hello Quarto\n\n\nWelcome to my Quarto portfolio\n\n\n\n\n\nAug 31, 2026\n\n\nKathy Guo\n\n\n\n\n\nNo matching items"
+    "objectID": "labOverview.html#lab-2-multiplexed-7-segment-display",
+    "href": "labOverview.html#lab-2-multiplexed-7-segment-display",
+    "title": "Labs",
+    "section": "Lab 2: Multiplexed 7-Segment Display",
+    "text": "Lab 2: Multiplexed 7-Segment Display"
+  },
+  {
+    "objectID": "labOverview.html#lab-3-keypad-scanner",
+    "href": "labOverview.html#lab-3-keypad-scanner",
+    "title": "Labs",
+    "section": "Lab 3: Keypad Scanner",
+    "text": "Lab 3: Keypad Scanner"
+  },
+  {
+    "objectID": "labOverview.html#lab-4-digital-audio",
+    "href": "labOverview.html#lab-4-digital-audio",
+    "title": "Labs",
+    "section": "Lab 4: Digital Audio",
+    "text": "Lab 4: Digital Audio"
+  },
+  {
+    "objectID": "labOverview.html#lab-5-interrupts",
+    "href": "labOverview.html#lab-5-interrupts",
+    "title": "Labs",
+    "section": "Lab 5: Interrupts",
+    "text": "Lab 5: Interrupts"
+  },
+  {
+    "objectID": "labOverview.html#lab-6-the-internet-of-things-and-serial-peripheral-interface",
+    "href": "labOverview.html#lab-6-the-internet-of-things-and-serial-peripheral-interface",
+    "title": "Labs",
+    "section": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "text": "Lab 6: The Internet of Things and Serial Peripheral Interface"
+  },
+  {
+    "objectID": "labOverview.html#lab-7-the-advanced-encryption-standard",
+    "href": "labOverview.html#lab-7-the-advanced-encryption-standard",
+    "title": "Labs",
+    "section": "Lab 7: The Advanced Encryption Standard",
+    "text": "Lab 7: The Advanced Encryption Standard"
   }
 ]
