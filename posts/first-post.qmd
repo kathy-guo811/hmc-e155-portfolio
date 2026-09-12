@@ -7,7 +7,6 @@ categories:
   - reflection
 draft: false
 ---
-
 This semester, I want to become more comfortable working with microcontrollers and embedded systems. I hope to improve my ability to connect hardware and software and understand how the two interact.
 
 One of my goals is to become more confident in debugging circuits and writing firmware. I also want to improve my time management skills and learn how to set realistic milestones for larger projects. I hope that by the end of the semester, I will be better at breaking down complex projects into manageable steps and staying on track throughout the process.
