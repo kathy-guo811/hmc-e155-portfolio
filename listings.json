@@ -4,5 +4,11 @@
     "items": [
       "/posts/first-post.html"
     ]
+  },
+  {
+    "listing": "/resources.html",
+    "items": [
+      "/posts/first-post.html"
+    ]
   }
 ]
