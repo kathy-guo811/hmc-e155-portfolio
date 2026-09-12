@@ -1,10 +1,15 @@
 ---
-title: "Hello Quarto"
-description: "Welcome to my Quarto portfolio"
+title: "Initial Reflection"
+description: "My goals this semester for MicroPs"
 author: "Kathy Guo"
 date: "8/31/26"
 categories:
   - reflection
-  - labreport
 draft: false
 ---
+
+This semester, I want to become more comfortable working with microcontrollers and embedded systems. I hope to improve my ability to connect hardware and software and understand how the two interact.
+
+One of my goals is to become more confident in debugging circuits and writing firmware. I also want to improve my time management skills and learn how to set realistic milestones for larger projects. I hope that by the end of the semester, I will be better at breaking down complex projects into manageable steps and staying on track throughout the process.
+
+By the end of the semester, I hope to have a stronger understanding of embedded systems and be able to build and troubleshoot projects more independently.
