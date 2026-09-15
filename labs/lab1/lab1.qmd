@@ -22,7 +22,7 @@ The top module of this lab contains the internal high speed oscillator from the 
 The source code for the project can be found in the associated [Github repository](https://github.com/kathy-guo811/e155-lab1).
 
 ### Schematic
-![Figure 1: Schematic of the Physical Layout](lab1_images/lab1_schematic.jpeg)
+![Figure 1: Schematic of the Physical Layout](lab1_images/lab1_sch.jpeg)
 
 Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.
 
