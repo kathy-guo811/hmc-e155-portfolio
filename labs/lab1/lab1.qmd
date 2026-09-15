@@ -55,5 +55,12 @@ Therefore, the a 24-bit counter was implemented to count up to 10^7 clock cycles
 
 ![Figure 6: Waveform of the Top Module Counter Testbench Simulation](lab1_images/lab1_top_module_counter_wf.jpeg)
 
+The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the `seven_segment_display`, `blinker`, and top-level, `lab1_kg`,module. 
+
+# Conclusion
+
+The design successfully implemented the intended functionality of controlling a 7-segment LED display, switching two onboard LEDs on and off, and blinking an onboard LED at a frequency of 2.4 Hz using the high-speed oscillator. I spent around 25 hours working on this lab.
+
+*Comment: It would be helpful to include a tutorial for syncing .sv files from Radient to GitHub, what files are needed in the final submission, and what to include in the .gitignore file?*
 
 # AI Prototype Summary
