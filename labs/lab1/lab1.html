@@ -74,6 +74,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -122,8 +151,26 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
+  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
+  <ul class="collapse">
+  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
+  </ul></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a>
+  <ul class="collapse">
+  <li><a href="#testbench-simulation" id="toc-testbench-simulation" class="nav-link" data-scroll-target="#testbench-simulation">Testbench Simulation</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#ai-prototype-summary" id="toc-ai-prototype-summary" class="nav-link" data-scroll-target="#ai-prototype-summary">AI Prototype Summary</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -147,8 +194,142 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this lab, a verilog design was implemented on the FPGA to: 1. control a 7-segment LED to display a single hexadecimal digit with a 4-Position DIP switch digits 2. switch two onboard LEDs on and off with a 4-Position DIP switch 3. blink a onboard LED at a frequency of 2.4 Hz with the onboard high-speed oscillator.</p>
+<p>The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz.</p>
+</section>
+<section id="design-and-testing-methodology" class="level1">
+<h1>Design and Testing Methodology</h1>
+<p>The top module of this lab contains the internal high speed oscillator from the iCE40 UltraPlus primitive library to generate a clock signal at 24 MHz, switch-to-LED assign logic to turn two onbaord LEDs on and off, and instantiates ‘blinker’ and ‘seven_segment_display’.</p>
+<p><code>seven_segment_display</code> is a combinational logic circuit designed to control the 7-segment LED display and the onboard LEDs based on the input from the DIP switches.</p>
+<p><code>blinker</code> is a flip-flop that takes the clock signal from the high-speed oscillator and uses it to set the blinking frequency of a onboard LEDat 2.4 Hz.</p>
+</section>
+<section id="technical-documentation" class="level1">
+<h1>Technical Documentation</h1>
+<p>The source code for the project can be found in the associated <a href="https://github.com/kathy-guo811/e155-lab1">Github repository</a>.</p>
+<section id="schematic" class="level3">
+<h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab1_images/lab1_schematic.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Schematic of the Physical Layout</figcaption>
+</figure>
+</div>
+<p>Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.</p>
+<section id="resistor-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="resistor-calculations">Resistor Calculations</h4>
+<p>To limit the current through the LEDs with 5-20 mA, the following calculations were performed using Ohm’s Law: <span class="math display">\[V = IR\]</span> <span class="math display">\[R1 = \frac{3.3V}{330Ω} = 10mA\]</span> <span class="math display">\[R2 = \frac{3.3V}{180Ω} = 18.3mA\]</span></p>
+</section>
+</section>
+<section id="block-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab1_images/lab1_bd.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Block Diagram of the Verilog Design</figcaption>
+</figure>
+</div>
+<p>Figure 2 shows the block diagram of the design. The top-level module <code>lab1_kg</code> includes three submodules: the high-speed oscillator block (<code>HSOSC</code>), the clock divider module(<code>blinker</code>), and the seven-segment display module(<code>seven_segment_display</code>).</p>
+<section id="frequency-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="frequency-calculations">Frequency Calculations</h4>
+<p>Given the frequency generated by the osciloscope is 24 MHz, the clock divider module was designed to divide the frequency down to 2.4 Hz. The following calculations were performed to determine the number of clock cycles, N, required for the desired frequency: <span class="math display">\[f_{out} = \frac{f_{in}}{N}\]</span> <span class="math display">\[2.4 Hz = \frac{24 MHz}{N}\]</span> <span class="math display">\[N = \frac{24 MHz}{2.4 Hz} = 10^7\]</span></p>
+<p>Therefore, the a 24-bit counter was implemented to count up to 10^7 clock cycles before toggling the output signal to achieve the desired blinking frequency of 2.4 Hz.</p>
+</section>
+</section>
+</section>
+<section id="results-and-discussion" class="level1">
+<h1>Results and Discussion</h1>
+<section id="testbench-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab1_images/lab1_seven_segment_display_wf.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Waveform of the Seven_Segmennt_Display Testbench Simulation</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab1_images/lab1_counter_wf.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Waveform of the Counter Testbench Simulation</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab1_images/lab1_top_module_wf.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: Waveform of the Top Module Testbench Simulation</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab1_images/lab1_top_module_counter_wf.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Waveform of the Top Module Counter Testbench Simulation</figcaption>
+</figure>
+</div>
+<p>The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the <code>seven_segment_display</code>, <code>blinker</code>, and top-level, <code>lab1_kg</code>,module.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>The design successfully implemented the intended functionality of controlling a 7-segment LED display, switching two onboard LEDs on and off, and blinking an onboard LED at a frequency of 2.4 Hz using the high-speed oscillator. I spent around 25 hours working on this lab.</p>
+<p><em>Comment: It would be helpful to include a tutorial for syncing .sv files from Radient to GitHub, what files are needed in the final submission, and what to include in the .gitignore file?</em></p>
+</section>
+<section id="ai-prototype-summary" class="level1">
+<h1>AI Prototype Summary</h1>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see FPGA code generated by Gemini">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Expand to see FPGA code generated by Gemini
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>`// Top-level SystemVerilog module for Lattice iCE40UP5K module top ( output logic led_o );</p>
+<pre><code>// Constant parameters
+localparam int CLK_FREQ_HZ = 24_000_000;
+localparam int BLINK_FREQ_HZ = 2;
+
+// Calculate cycles needed for each half-period toggle
+localparam int TOGGLE_CYCLES = CLK_FREQ_HZ / (BLINK_FREQ_HZ * 2);
+localparam int COUNTER_WIDTH = $clog2(TOGGLE_CYCLES);
+
+// Internal logic signals
+logic clk_24mhz;
+logic [COUNTER_WIDTH-1:0] counter = '0;
+
+// Instantiate the Lattice iCE40 High-Speed Oscillator hard IP component
+HSOSC #(
+    .CLKHF_DIV("0b00") // 0b00 = 24 MHz, 0b01 = 12 MHz, 0b10 = 6 MHz, 0b11 = 3 MHz
+) hf_osc_inst (
+    .CLKHFPU(1'b1),    // Power up the oscillator (1 = active, 0 = powered down)
+    .CLKHFEN(1'b1),    // Enable the clock output
+    .CLKHF  (clk_24mhz) // Oscillator clock output connection
+);
+
+// Counter and LED toggle logic
+always_ff @(posedge clk_24mhz) begin
+    if (counter == TOGGLE_CYCLES - 1) begin
+        counter &lt;= '0;
+        led_o   &lt;= ~led_o;
+    end else begin
+        counter &lt;= counter + 1'b1;
+    end
+end</code></pre>
+<p>endmodule`</p>
+</div>
+</div>
+</div>
+<p>The quality of the output looks decent as it contains configurable parameters for the clock frequency and blink frequency, as well as a clear structure for the top-level module. However, when instantiating the HSOSC module, the LLM used a different value to configure .CLKHF_DIV than what was used in the lab. The lab used “2’b01” for 24 MHz, while the LLM used “0b00” for 24 MHz, which is incorrect according to the Lattice iCE40 documentation.</p>
+<p>The LLM-generated code introduced the use of <code>localparam</code> for defining constant parameters and used the <code>$clog2</code> function to calculate the width of the counter based on the number of toggle cycles, both of which were new to me.</p>
+<p>The LLM-generated code did synthesize successfully the first time with no error or warning messages, but the incorrect configuration of the HSOSC module would have caused issues with the clock frequency.</p>
+<p>When using an LLM in my workflow next time, I would cross check the generated code with the official documentation to ensure that all configurations and parameters are correct.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
