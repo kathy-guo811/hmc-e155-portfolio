@@ -22,7 +22,9 @@ The top module of this lab contains the internal high speed oscillator from the 
 The source code for the project can be found in the associated [Github repository](https://github.com/kathy-guo811/e155-lab1).
 
 ### Schematic
-![Figure 1: Schematic of the Physical Layout](lab1_images/lab1_sch.jpeg)
+
+![Figure 1: Schematic of the Physical Layout](lab1_images/lab1_sch.jpeg) **bold italics***
+
 
 Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.
 
@@ -49,7 +51,7 @@ Therefore, the a 24-bit counter was implemented to count up to 10^7 clock cycles
 ### Testbench Simulation
 ![Figure 3: Waveform of the Seven_Segmennt_Display Testbench Simulation](lab1_images/lab1_seven_segment_display_wf.jpeg)
 
-![Figure 4: Waveform of the Counter Testbench Simulation](lab1_images/lab1_counter_wf.jpeg)
+![Figure 4: Waveform of the Blinker Testbench Simulation](lab1_images/lab1_blinker_wf.jpeg)
 
 ![Figure 5: Waveform of the Top Module Testbench Simulation](lab1_images/lab1_top_module_wf.jpeg)
 
@@ -57,11 +59,15 @@ Therefore, the a 24-bit counter was implemented to count up to 10^7 clock cycles
 
 The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the `seven_segment_display`, `blinker`, and top-level, `lab1_kg`,module. 
 
+The `seven_segment_display` module was tested with all possible combinations of the 4-position DIP switch inputs, and the output waveform shows that the correct segments of the 7-segment LED display were turned on for each input combination.
+
+The `blinker` module was tested with the 24 MHz clock signal from the high-speed oscillator, with `'max_count' set to 5 to show the toggling of the output signal.
+
+The `top module` was tested with the 24 MHz clock signal from the high-speed oscillator, and the output waveform shows that two onboard LEDs are turning on and off, and the counter is incrementing.
+
 # Conclusion
 
 The design successfully implemented the intended functionality of controlling a 7-segment LED display, switching two onboard LEDs on and off, and blinking an onboard LED at a frequency of 2.4 Hz using the high-speed oscillator. I spent around 25 hours working on this lab.
-
-*Comment: It would be helpful to include a tutorial for syncing .sv files from Radient to GitHub, what files are needed in the final submission, and what to include in the .gitignore file?*
 
 # AI Prototype Summary
 
