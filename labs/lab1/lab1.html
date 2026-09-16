@@ -213,7 +213,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="lab1_images/lab1_sch.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 1: Schematic of the Physical Layout</figcaption>
+<figcaption>Figure 1: Schematic of the Physical Layout, Kathy Guo, 9/4/2026</figcaption>
 </figure>
 </div>
 <p>Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.</p>
@@ -227,7 +227,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="lab1_images/lab1_bd.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: Block Diagram of the Verilog Design</figcaption>
+<figcaption>Figure 2: Block Diagram of the Verilog Design, Kathy Guo, 9/4/2026</figcaption>
 </figure>
 </div>
 <p>Figure 2 shows the block diagram of the design. The top-level module <code>lab1_kg</code> includes three submodules: the high-speed oscillator block (<code>HSOSC</code>), the clock divider module(<code>blinker</code>), and the seven-segment display module(<code>seven_segment_display</code>).</p>
@@ -250,8 +250,8 @@ window.Quarto = {
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="lab1_images/lab1_counter_wf.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 4: Waveform of the Counter Testbench Simulation</figcaption>
+<p><img src="lab1_images/lab1_blinker_wf.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Waveform of the Blinker Testbench Simulation</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -267,12 +267,14 @@ window.Quarto = {
 </figure>
 </div>
 <p>The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the <code>seven_segment_display</code>, <code>blinker</code>, and top-level, <code>lab1_kg</code>,module.</p>
+<p>The <code>seven_segment_display</code> module was tested with all possible combinations of the 4-position DIP switch inputs, and the output waveform shows that the correct segments of the 7-segment LED display were turned on for each input combination.</p>
+<p>The <code>blinker</code> module was tested with the 24 MHz clock signal from the high-speed oscillator, with `‘max_count’ set to 5 to show the toggling of the output signal.</p>
+<p>The <code>top module</code> was tested with the 24 MHz clock signal from the high-speed oscillator, and the output waveform shows that two onboard LEDs are turning on and off, and the counter is incrementing.</p>
 </section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>The design successfully implemented the intended functionality of controlling a 7-segment LED display, switching two onboard LEDs on and off, and blinking an onboard LED at a frequency of 2.4 Hz using the high-speed oscillator. I spent around 25 hours working on this lab.</p>
-<p><em>Comment: It would be helpful to include a tutorial for syncing .sv files from Radient to GitHub, what files are needed in the final submission, and what to include in the .gitignore file?</em></p>
 </section>
 <section id="ai-prototype-summary" class="level1">
 <h1>AI Prototype Summary</h1>
