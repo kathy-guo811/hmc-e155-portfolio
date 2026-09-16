@@ -29,10 +29,10 @@ The source code for the project can be found in the associated [Github repositor
 Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.
 
 #### Resistor Calculations
-To limit the current through the LEDs with 5-20 mA, the following calculations were performed using Ohm's Law:
+To limit the current through the LEDs and ensure all segments are equally bright, the following calculations were performed using Ohm's Law:
 $$V = IR$$
-$$R1 = \frac{3.3V}{330Ω} = 10mA$$
-$$R2 = \frac{3.3V}{180Ω} = 18.3mA$$
+$$R1 = \frac{3.3V-2.1V}{330Ω} = 3.64mA$$
+$$R2 = \frac{3.3V-2.1V}{180Ω} = 6.67mA$$
 
 ### Block Diagram
 ![Figure 2: Block Diagram of the Verilog Design, Kathy Guo, 9/4/2026](lab1_images/lab1_bd.jpeg)
