@@ -25,7 +25,7 @@ The source code for the project can be found in the associated [Github repositor
 
 ::: {.callout-note appearance="simple" title="Expand to see Lab 1 Schematic" icon=false collapse="true"}
 
-![Figure 1: Schematic of the Physical Layout, Kathy Guo, 9/4/2026](lab1_images/lab1_sch.jpeg)
+![Figure 1: Schematic of the Physical Layout](lab1_images/lab1_sch.jpeg)
 
 Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.
 :::
@@ -41,7 +41,7 @@ $$R2 = \frac{3.3V-2.1V}{180Ω} = 6.67mA$$
 ::: {.callout-note appearance="simple" title="Expand to see Lab 1 Block Diagram" icon=false collapse="true"}
 
 
-![Figure 2: Block Diagram of the Verilog Design, Kathy Guo, 9/4/2026](lab1_images/lab1_bd.jpeg)
+![Figure 2: Block Diagram of the Verilog Design](lab1_images/lab1_bd.jpeg)
 
 Figure 2 shows the block diagram of the design. The top-level module `lab1_kg` includes three submodules: the high-speed oscillator block (`HSOSC`), the clock divider module(`blinker`), and the seven-segment display module(`seven_segment_display`). 
 :::
@@ -69,7 +69,7 @@ Therefore, the a 24-bit counter was implemented to count up to 10^7 clock cycles
 :::
 
 
-The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the `seven_segment_display`, `blinker`, and top-level, `lab1_kg`,module. 
+The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the `seven_segment_display`, `blinker`, and top-level, `lab1_kg`, module. 
 
 The `seven_segment_display` module was tested with all possible combinations of the 4-position DIP switch inputs, and the output waveform shows that the correct segments of the 7-segment LED display were turned on for each input combination.
 
