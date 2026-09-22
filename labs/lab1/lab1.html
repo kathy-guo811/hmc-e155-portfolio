@@ -225,7 +225,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="lab1_images/lab1_sch.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 1: Schematic of the Physical Layout, Kathy Guo, 9/4/2026</figcaption>
+<figcaption>Figure 1: Schematic of the Physical Layout</figcaption>
 </figure>
 </div>
 <p>Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.</p>
@@ -254,7 +254,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="lab1_images/lab1_bd.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: Block Diagram of the Verilog Design, Kathy Guo, 9/4/2026</figcaption>
+<figcaption>Figure 2: Block Diagram of the Verilog Design</figcaption>
 </figure>
 </div>
 <p>Figure 2 shows the block diagram of the design. The top-level module <code>lab1_kg</code> includes three submodules: the high-speed oscillator block (<code>HSOSC</code>), the clock divider module(<code>blinker</code>), and the seven-segment display module(<code>seven_segment_display</code>).</p>
@@ -311,7 +311,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the <code>seven_segment_display</code>, <code>blinker</code>, and top-level, <code>lab1_kg</code>,module.</p>
+<p>The design met all intended design objectives. The above figures show screenshots of the QuestaSim simulation waveforms for the <code>seven_segment_display</code>, <code>blinker</code>, and top-level, <code>lab1_kg</code>, module.</p>
 <p>The <code>seven_segment_display</code> module was tested with all possible combinations of the 4-position DIP switch inputs, and the output waveform shows that the correct segments of the 7-segment LED display were turned on for each input combination.</p>
 <p>The <code>blinker</code> module was tested with the 24 MHz clock signal from the high-speed oscillator, with `‘max_count’ set to 5 to show the toggling of the output signal.</p>
 <p>The <code>top module</code> was tested with the 24 MHz clock signal from the high-speed oscillator, and the output waveform shows that two onboard LEDs are turning on and off, and the counter is incrementing.</p>
@@ -335,38 +335,43 @@ window.Quarto = {
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>`// Top-level SystemVerilog module for Lattice iCE40UP5K module top ( output logic led_o );</p>
-<pre><code>// Constant parameters
-localparam int CLK_FREQ_HZ = 24_000_000;
-localparam int BLINK_FREQ_HZ = 2;
-
-// Calculate cycles needed for each half-period toggle
-localparam int TOGGLE_CYCLES = CLK_FREQ_HZ / (BLINK_FREQ_HZ * 2);
-localparam int COUNTER_WIDTH = $clog2(TOGGLE_CYCLES);
-
-// Internal logic signals
-logic clk_24mhz;
-logic [COUNTER_WIDTH-1:0] counter = '0;
-
-// Instantiate the Lattice iCE40 High-Speed Oscillator hard IP component
-HSOSC #(
-    .CLKHF_DIV("0b00") // 0b00 = 24 MHz, 0b01 = 12 MHz, 0b10 = 6 MHz, 0b11 = 3 MHz
-) hf_osc_inst (
-    .CLKHFPU(1'b1),    // Power up the oscillator (1 = active, 0 = powered down)
-    .CLKHFEN(1'b1),    // Enable the clock output
-    .CLKHF  (clk_24mhz) // Oscillator clock output connection
+<pre><code>// Top-level SystemVerilog module for Lattice iCE40UP5K
+module top (
+    output logic led_o
 );
 
-// Counter and LED toggle logic
-always_ff @(posedge clk_24mhz) begin
-    if (counter == TOGGLE_CYCLES - 1) begin
-        counter &lt;= '0;
-        led_o   &lt;= ~led_o;
-    end else begin
-        counter &lt;= counter + 1'b1;
+    // Constant parameters
+    localparam int CLK_FREQ_HZ = 24_000_000;
+    localparam int BLINK_FREQ_HZ = 2;
+    
+    // Calculate cycles needed for each half-period toggle
+    localparam int TOGGLE_CYCLES = CLK_FREQ_HZ / (BLINK_FREQ_HZ * 2);
+    localparam int COUNTER_WIDTH = $clog2(TOGGLE_CYCLES);
+
+    // Internal logic signals
+    logic clk_24mhz;
+    logic [COUNTER_WIDTH-1:0] counter = '0;
+
+    // Instantiate the Lattice iCE40 High-Speed Oscillator hard IP component
+    HSOSC #(
+        .CLKHF_DIV("0b00") // 0b00 = 24 MHz, 0b01 = 12 MHz, 0b10 = 6 MHz, 0b11 = 3 MHz
+    ) hf_osc_inst (
+        .CLKHFPU(1'b1),    // Power up the oscillator (1 = active, 0 = powered down)
+        .CLKHFEN(1'b1),    // Enable the clock output
+        .CLKHF  (clk_24mhz) // Oscillator clock output connection
+    );
+
+    // Counter and LED toggle logic
+    always_ff @(posedge clk_24mhz) begin
+        if (counter == TOGGLE_CYCLES - 1) begin
+            counter &lt;= '0;
+            led_o   &lt;= ~led_o;
+        end else begin
+            counter &lt;= counter + 1'b1;
+        end
     end
-end</code></pre>
-<p>endmodule`</p>
+
+endmodule</code></pre>
 </div>
 </div>
 </div>

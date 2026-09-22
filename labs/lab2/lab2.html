@@ -161,7 +161,14 @@ window.Quarto = {
   <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
   <ul class="collapse">
   <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
   </ul></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a>
+  <ul class="collapse">
+  <li><a href="#testbench-simulation" id="toc-testbench-simulation" class="nav-link" data-scroll-target="#testbench-simulation">Testbench Simulation</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#ai-prototype-summary" id="toc-ai-prototype-summary" class="nav-link" data-scroll-target="#ai-prototype-summary">AI Prototype Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -189,7 +196,7 @@ window.Quarto = {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In this lab, a verilog design was implemented on the FPGA to: 1. implement a time-muxing scheme to drive two seven-segment displays with a single set of FPGA I/O pins. 2. build a transistor circuit to verified that logic signals can pass through it a keypad.</p>
+<p>In this lab, a verilog design was implemented on the FPGA to: 1. implement a time-multiplexing scheme to drive two seven-segment displays with a single set of FPGA I/O pins. 2. build a transistor circuit to verify that logic signals can pass through it via a keypad.</p>
 <p>The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz.</p>
 </section>
 <section id="design-and-testing-methodology" class="level1">
@@ -202,7 +209,7 @@ window.Quarto = {
 <section id="schematic" class="level3">
 <h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see Lab 2 Schematic">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -211,16 +218,35 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><img src="lab2_images/lab2_sch.jpeg" class="img-fluid" alt="Figure 1: Schematic of the LED, Kathy Guo, 9/4/2026"> <img src="lab2_images/lab2_sch.jpeg" class="img-fluid" alt="Figure 2: Schematic of the Kaypad, Kathy Guo, 9/4/2026"></p>
-<p>Figure 1 shows the physical layout of the design. The pins connected to s[3:0] were configured with 100kΩ pull-up resistors to avoid invalid logic levels The output LED was connected using a current-limiting resistor to ensure the output current did not exceed the maximum output current of the FPGA I/O pins. The resistor value varies to ensure all segments are equally bright. The onboard LEDs were connected current limiting resistors and GPIO pins of the FPGA to perform their intended tasks.</p>
+<p><img src="lab2_images/lab2_led_sch.jpeg" class="img-fluid" alt="Figure 1: Schematic of the LED, Kathy Guo, 9/4/2026"> <img src="lab2_images/lab2_scanner_sch.jpeg" class="img-fluid" alt="Figure 2: Schematic of the Keypad, Kathy Guo, 9/4/2026"></p>
+</div>
+</div>
+</div>
 <section id="resistor-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="resistor-calculations">Resistor Calculations</h4>
-<p>LED resistor: <span class="math display">\[V = IR\]</span> <span class="math display">\[R1 = \frac{3.3V-2.1V}{100Ω} = 12mA\]</span> <span class="math display">\[R2 = \frac{3.3V-2.1V}{100Ω}= 12mA\]</span></p>
+<p>LED resistor: <span class="math display">\[R_{LED} = \frac{3.3V-2.0V}{100Ω} = 13mA\]</span></p>
+<p>LED transistor resistor:</p>
+<p>The I_OL of the LVCMOS 3.3 is 8 mA, hence, for 7 pins, the collector current, I_C, is 56 mA. According to the 2N3906 datasheet, the I_B of the transistor is I_C/10, which, in this case, is 0.0056 A. The V_BE of the transistor is typically 0.7 V. Therefore, the resistor value can be calculated as follows: <span class="math display">\[R_{LED\:transistor} = \frac{3.3V-0.7V}{0.0056A} \approx 470Ω\]</span></p>
+<p>Keypad transistor resistor:</p>
+<p>According to the 2N3904 datasheet, the I_B of the transistor is I_C/10, where I_C is 0.02 A. The V_BE of the transistor is typically 0.7 V. Therefore, the resistor value can be calculated as follows: <span class="math display">\[R_{keypad\:transistor} = \frac{3.3V-0.7V}{0.002A} \approx 1000Ω\]</span></p>
+</section>
 </section>
 <section id="block-diagram" class="level3">
 <h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see Lab 2 Block Diagram">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Expand to see Lab 2 Block Diagram
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="lab2_images/lab2_bd.jpeg" class="img-fluid figure-img"></p>
@@ -228,20 +254,36 @@ window.Quarto = {
 </figure>
 </div>
 <p>Figure 2 shows the block diagram of the design. The top-level module <code>lab2_kg</code> includes the high-speed oscillator block (<code>HSOSC</code>), <code>counter</code> for time-multiplexging, <code>blinker</code> for scannign the keypad, and the seven-segment display module(<code>seven_segment_display</code>).</p>
+</div>
+</div>
+</div>
 <section id="frequency-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="frequency-calculations">Frequency Calculations</h4>
 <p>Given the frequency generated by the osciloscope is 24 MHz, the clock divider module was designed to divide the frequency down to 2.4 Hz. The following calculations were performed to determine the number of clock cycles, N, required for the desired frequency: <span class="math display">\[f_{out} = \frac{f_{in}}{N}\]</span> <span class="math display">\[2.4 Hz = \frac{24 MHz}{N}\]</span> <span class="math display">\[N = \frac{24 MHz}{2.4 Hz} = 10^7\]</span></p>
 <p>The frequency of the counter was set to 1 kHz to ensure that the two seven-segment displays are multiplexed at a frequency that is fast enough to avoid flickering. The following calculations were performed to determine the number of clock cycles, N, required for the desired frequency: <span class="math display">\[f_{out} = \frac{f_{in}}{N}\]</span> <span class="math display">\[1 kHz = \frac{24 MHz}{N}\]</span> <span class="math display">\[N = \frac{24 MHz}{1 kHz} = 24000\]</span></p>
 </section>
 </section>
+</section>
 <section id="results-and-discussion" class="level1">
 <h1>Results and Discussion</h1>
 <section id="testbench-simulation" class="level3">
 <h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see Lab 2 Simulation Results">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Expand to see Lab 2 Simulation Results
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="lab2_images/lab2_top_level_wf.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 4: Waveform of Top Level Testbench</figcaption>
+<p><img src="lab2_images/lab2_top_module_wf.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Waveform of Top Level Testbench Simulation</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -250,35 +292,199 @@ window.Quarto = {
 <figcaption>Figure 5: Waveform of the Scanner Testbench Simulation</figcaption>
 </figure>
 </div>
+</div>
+</div>
+</div>
+<p>Figure 4 shows the waveform of the top-level testbench simulation, which verifies the functionality of the entire design. The simulation confirms that the seven-segment displays are multiplexing and that the LED driver is functioning correctly.</p>
+<p>Figure 5 shows the waveform of the scanner testbench simulation, which demonstrates all four output transitionss, as well as the enable and reset features.</p>
 </section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
+<p>The design was successfully implemented on the FPGA and verified through simulation and physical testing. The time-multiplexing scheme effectively controlled two seven-segment displays using a single set of I/O pins, and the transistor circuit allowed for successful signal transmission through the keypad. The calculated resistor values ensured proper current limiting for both the LEDs and transistors, maintaining safe operating conditions for all components.</p>
 </section>
 <section id="ai-prototype-summary" class="level1">
 <h1>AI Prototype Summary</h1>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see FPGA code generated by Gemini">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="AI Prototype Part 1: Expand to see FPGA code generated by Gemini">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Expand to see FPGA code generated by Gemini
+<span class="screen-reader-only">Note</span>AI Prototype Part 1: Expand to see FPGA code generated by Gemini
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<pre><code>module top_display_multiplexer #(
+    parameter integer CLK_FREQ = 50_000_000, // Input clock frequency in Hz
+    parameter integer REFRESH_RATE = 1000    // Desired display refresh rate in Hz
+)(
+    input  logic       clk,         // Main clock input
+    input  logic       rst,         // Active-high asynchronous reset
+    input  logic [3:0] in0,         // First 4-bit input
+    input  logic [3:0] in1,         // Second 4-bit input
+    output logic [6:0] seg_n,       // Active-low seven-segment outputs {g, f, e, d, c, b, a}
+    output logic [1:0] anode_n      // Active-low common anodes: [0]=Disp0, [1]=Disp1
+);
+
+    // Dynamic counter limit based on input clock and target refresh frequency
+    localparam integer CNT_MAX = (CLK_FREQ / (REFRESH_RATE * 2)) - 1;
+    localparam integer CNT_WIDTH = $clog2(CNT_MAX + 1);
+
+    logic [CNT_WIDTH-1:0] refresh_cnt;
+    logic                 mux_sel;
+    logic [3:0]           mux_in;
+
+    // ------------------------------------------------------------------------
+    // 1. Refresh Counter &amp; MUX Selection Register
+    // Generates a switching tick (~500 Hz per display = 1 kHz total)
+    // ------------------------------------------------------------------------
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            refresh_cnt &lt;= '0;
+            mux_sel     &lt;= 1'b0;
+        end else begin
+            if (refresh_cnt == CNT_MAX) begin
+                refresh_cnt &lt;= '0;
+                mux_sel     &lt;= ~mux_sel; // Toggle active display selection
+            end else begin
+                refresh_cnt &lt;= refresh_cnt + 1'b1;
+            end
+        end
+    end
+
+    // ------------------------------------------------------------------------
+    // 2. Time-Multiplexing Logic
+    // Selects active input nibble and corresponding active-low common anode pin
+    // ------------------------------------------------------------------------
+    always_comb begin
+        if (mux_sel == 1'b0) begin
+            mux_in  = in0;
+            anode_n = 2'b10; // Enable Display 0 (pin 0 = active low)
+        end else begin
+            mux_in  = in1;
+            anode_n = 2'b01; // Enable Display 1 (pin 1 = active low)
+        end
+    end
+
+    // ------------------------------------------------------------------------
+    // 3. Shared Seven-Segment Decoder Module
+    // ------------------------------------------------------------------------
+    sev_seg_decoder u_decoder (
+        .hex_in(mux_in),
+        .seg_n (seg_n)
+    );
+
+endmodule
 
 
+// ============================================================================
+// Seven-Segment Decoder (Common Anode: Active-Low Segments)
+// Segments ordered as: {g, f, e, d, c, b, a}
+// ============================================================================
+module sev_seg_decoder (
+    input  logic [3:0] hex_in,
+    output logic [6:0] seg_n
+);
+
+    always_comb begin
+        case (hex_in)
+            4'h0: seg_n = 7'b100_0000; // 0
+            4'h1: seg_n = 7'b111_1001; // 1
+            4'h2: seg_n = 7'b010_0100; // 2
+            4'h3: seg_n = 7'b011_0000; // 3
+            4'h4: seg_n = 7'b001_1001; // 4
+            4'h5: seg_n = 7'b001_0010; // 5
+            4'h6: seg_n = 7'b000_0010; // 6
+            4'h7: seg_n = 7'b111_1000; // 7
+            4'h8: seg_n = 7'b000_0000; // 8
+            4'h9: seg_n = 7'b001_0000; // 9
+            4'hA: seg_n = 7'b000_1000; // A
+            4'hB: seg_n = 7'b000_0011; // b
+            4'hC: seg_n = 7'b100_0110; // C
+            4'hD: seg_n = 7'b010_0001; // d
+            4'hE: seg_n = 7'b000_0110; // E
+            4'hF: seg_n = 7'b000_1110; // F
+            default: seg_n = 7'b111_1111; // All OFF
+        endcase
+    end
+
+endmodule</code></pre>
 </div>
 </div>
 </div>
-</section>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="AI Prototype Part 2: Expand to see FPGA code generated by Gemini">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>AI Prototype Part 2: Expand to see FPGA code generated by Gemini
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>// SystemVerilog Time-Multiplexed Seven-Segment Display
+// Time-multiplexes two 4-bit inputs through a single decoder module.
+
+module display_multiplexer (
+    input  logic       clk,      // Clock input from oscillator / blinker module
+    input  logic       reset,    // Active-low or active-high reset
+    input  logic [3:0] in0,      // First 4-bit nibble input
+    input  logic [3:0] in1,      // Second 4-bit nibble input
+    output logic [6:0] seg0,     // Seven-segment output for Display 0
+    output logic [6:0] seg1      // Seven-segment output for Display 1
+);
+
+    // Internal signals
+    logic       sel;             // Multiplexer select / toggle bit
+    logic [3:0] mux_in;          // Input to the shared decoder
+    logic [6:0] decoded_seg;     // Decoder output bus
+
+    // 1. Multiplexer: Select between in0 and in1 based on toggle bit
+    assign mux_in = sel ? in1 : in0;
+
+    // 2. Shared Seven-Segment Decoder Instance
+    // Instantiates decoder module (sw6 -&gt; seg) from seven_segment_display
+    seven_segment_display decoder (
+        .sw6 (mux_in),
+        .seg (decoded_seg)
+    );
+
+    // 3. Time-Multiplexing Logic &amp; Registers
+    // Alternates between displays and latches the decoded segment data
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            sel  &lt;= 1'b0;
+            // Common Anode OFF state is typically all 1s (7'b1111111)
+            seg0 &lt;= 7'b1111111;
+            seg1 &lt;= 7'b1111111;
+        end else begin
+            // Toggle selection each clock cycle
+            sel &lt;= ~sel;
+
+            // Latch decoder output to the appropriate display output register
+            if (sel == 1'b0) begin
+                seg0 &lt;= decoded_seg;
+            end else begin
+                seg1 &lt;= decoded_seg;
+            end
+        end
+    end
+
+endmodule</code></pre>
 </div>
 </div>
 </div>
-</section>
+<p>The quality of both outputs is good as they both synthesized on the first try. The first one contains all module in one file, while the second one is more modular and uses a separate decoder module. The first one is more efficient in terms of resource usage, while the second one is more readable and easier to maintain.</p>
+<p>Gemini used syntax like <code>in0</code> and <code>in1</code> for the two 4-bit inputs, which I was new to.</p>
+<p>Some warming messages that Radient output were regarding pin assignments, but those warmings also occurred to my own code and mine was able to successfully program the FPGA, so I am not sure if they are related to the LLM-generated code.</p>
+<p>Next time when I use an LLM in my workflow, I could use it to educate myself regarding different syntax and coding styles, but I would still need to verify the code with the my own knowledge to ensure that it is correct and efficient.</p>
+
+
 </section>
 
 </main> <!-- /main -->
