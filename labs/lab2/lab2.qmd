@@ -234,7 +234,7 @@ endmodule
 
 The quality of both outputs is good as they both synthesized on the first try. The first one contains all module in one file, while the second one is more modular and uses a separate decoder module. The first one is more efficient in terms of resource usage, while the second one is more readable and easier to maintain.
 
-Gemini used syntax like `in0` and `in1` for the two 4-bit inputs, which I was new to.
+Gemini used syntax like `in0` and `in1` for the two 4-bit inputs, which I have never used in my own code.
 
 Some warming messages that Radient output were regarding pin assignments, but those warmings also occurred to my own code and mine was able to successfully program the FPGA, so I am not sure if they are related to the LLM-generated code. 
 
