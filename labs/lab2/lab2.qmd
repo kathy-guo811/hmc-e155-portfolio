@@ -24,13 +24,11 @@ The source code for the project can be found in the associated [Github repositor
 :::
 
 #### Resistor Calculations
-LED resistor:
-$$R_{LED} = \frac{3.3V-2.0V}{100Ω} = 13mA$$
 
 LED transistor resistor:
 
-The I_OL of the LVCMOS 3.3 is 8 mA, hence, for 7 pins, the collector current, I_C, is 56 mA. According to the 2N3906 datasheet, the I_B of the transistor is I_C/10, which, in this case, is 0.0056 A. The V_BE of the transistor is typically 0.7 V. Therefore, the resistor value can be calculated as follows:
-$$R_{LED\:transistor} = \frac{3.3V-0.7V}{0.0056A} \approx 470Ω$$
+The I_OL of the LVCMOS 3.3 is 8 mA.. According to the 2N3906 datasheet, the I_B of the transistor is I_C/10, which, in this case, is 0.0056 A. The V_BE of the transistor is typically 0.7 V. Therefore, the resistor value can be calculated as follows:
+$$R_{LED\:transistor} = \frac{3.3V-0.4V-0.7V}{0.0056A} \approx 470Ω$$
 
 Keypad transistor resistor:
 
