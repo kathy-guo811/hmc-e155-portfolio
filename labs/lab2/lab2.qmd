@@ -20,7 +20,7 @@ The source code for the project can be found in the associated [Github repositor
 ::: {.callout-note appearance="simple" title="Expand to see Lab 2 Schematic" icon=false collapse="true"}
 
 ![Figure 1: Schematic of the LED, Kathy Guo, 9/4/2026](lab2_images/lab2_led_sch.jpeg)
-![Figure 2: Schematic of the Keypad, Kathy Guo, 9/4/2026](lab2_images/lab2_scanner_sch.jpeg)
+![Figure 2: Schematic of the Keypad, Kathy Guo, 9/4/2026](lab2_images/lab2_scanner.sch.jpeg)
 :::
 
 #### Resistor Calculations
@@ -38,6 +38,7 @@ $$R_{keypad\:transistor} = \frac{3.3V-0.7V}{0.002A} \approx 1000Ω$$
 ### Block Diagram
 ::: {.callout-note appearance="simple" title="Expand to see Lab 2 Block Diagram" icon=false collapse="true"}
 ![Figure 3: Block Diagram of the Verilog Design, Kathy Guo, 9/4/2026](lab2_images/lab2_bd.jpeg)
+:::
 
 Figure 2 shows the block diagram of the design. The top-level module `lab2_kg` includes the high-speed oscillator block (`HSOSC`), `counter` for time-multiplexging, `blinker` for scannign the keypad, and the seven-segment display module(`seven_segment_display`). 
 :::
