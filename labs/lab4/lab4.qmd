@@ -85,6 +85,6 @@ The speed of the LLM is significantly faster than manually reading over the data
 
 All the code that Gemini generated are for assigning them to a specific number to perform a specific task. 
 
-Gemini chose to use TIM2, as it is a 32-bit general-purpose timer connected to standard GPIO pins (PA0/PA5) via Alternate Function mappings (AF1). It gives you extreme resolution and flexibility without overflowing. However, I thoguth TIM2 cannot generate PWMs, therefore I chose TIM16.
+Gemini chose to use TIM2, as it is a 32-bit general-purpose timer connected to standard GPIO pins (PA0/PA5) via Alternate Function mappings (AF1). It gives you extreme resolution and flexibility without overflowing. However, I thought TIM2 cannot generate PWMs, therefore I chose TIM16.
 
 Gemini did work well for document search, but I think further prompting or manual datasheet search is still necesary to have an understanding of the complete capabilities of a register.
