@@ -62,11 +62,11 @@ The shortest duration is one period. Since maximum frequency supported is 500 kH
 $$t_{min} = \frac{1}{500 kHz} = 2 μs\rightarrow 1 ms$$ 
 
 
-The maximum duration is limited by the 32-bit calculation `duration * 1000`, which becomes:ARR
+The maximum duration is limited by the 32-bit calculation `duration * 1000`, which becomes:
 
 $$t_{max} = \frac{2^{32}}{1000} \approx 4{,}294{,}967\ \text{ms} \approx 71.6\ \text{min}.$$
 
-Checking 220 HZ and 100 HZ isn't sufficient to prove all notes are within error bounds. The frequency error comes from the truncation during calculation, so it depends on whether the clocks 1 Mhz can divde the given frequency divides "nicely" with a small rounding error.
+Checking 220 HZ and 100 HZ isn't sufficient to prove all notes are within error bounds. The frequency error comes from the truncation during calculation, so it depends on whether the clock's 1 Mhz can divde the given frequency divides "nicely" with a small rounding error.
 
 # Conclusion 
 
