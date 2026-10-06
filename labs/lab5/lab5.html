@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -74,6 +109,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -122,8 +186,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
+  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
+  <ul class="collapse">
+  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#velocity-calculations" id="toc-velocity-calculations" class="nav-link" data-scroll-target="#velocity-calculations">Velocity Calculations</a></li>
+  <li><a href="#flowchart" id="toc-flowchart" class="nav-link" data-scroll-target="#flowchart">Flowchart</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#ai-prototype-summary" id="toc-ai-prototype-summary" class="nav-link" data-scroll-target="#ai-prototype-summary">AI Prototype Summary</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -147,8 +226,302 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this lab, C was written to control a MCU to determine the speed of a motor by reading from a quadrature encoder using interrupts.</p>
+</section>
+<section id="design-and-testing-methodology" class="level1">
+<h1>Design and Testing Methodology</h1>
+<p>The main module configures the clock to 80Mhz, initializes encoder inputs and interrupts, and then uses the encoder inputs to determine the speed of a motor. The speed is calculated by measuring the time between encoder pulses or the number of pulses between interrupts and converting that to a speed value.</p>
+</section>
+<section id="technical-documentation" class="level1">
+<h1>Technical Documentation</h1>
+<p>The source code for the project can be found in the associated <a href="https://github.com/kathy-guo811/e155-lab5">Github repository</a>.</p>
+<section id="schematic" class="level3">
+<h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see Lab 5 Schematic">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Expand to see Lab 5 Schematic
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab5_images/lab5_sch.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Schematic of the Physical Layout</figcaption>
+</figure>
+</div>
+<p>Figure 1 shows the how the motor and the quadrature encoder are connected to the MCU. The quadrature encoder has two channels, A and B, which are connected to 5V GPIO pins on the MCU. The motor is connected to a 12V power supply, and by switching power connection, the motor can be made to spin in either direction, and the speed of the motor can be controlled by adjusting the voltage supplied to the motor.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="velocity-calculations" class="level3">
+<h3 class="anchored" data-anchor-id="velocity-calculations">Velocity Calculations</h3>
+<section id="low-velocity-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="low-velocity-calculations">Low Velocity Calculations</h4>
+<p>Low velocity is calculated by measuring the time between encoder pulses. The time between pulses can be measured using a timer, and the speed can be calculated using the following formula: <span class="math display">\[v = \frac{1}{ \frac{encoder\_period}{10000}*COUNTS\_PER\_REV}\]</span></p>
+</section>
+<section id="high-velocity-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="high-velocity-calculations">High Velocity Calculations</h4>
+<p>High velocity is calculated by measuring the number of encoder pulses between each 1hz readout. The speed can be calculated using the following formula: <span class="math display">\[v = \frac{count\_change}{ \frac{time\_change}{10000}*COUNTS\_PER\_REV}\]</span></p>
+</section>
+<section id="update-rate-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="update-rate-calculations">Update Rate Calculations</h4>
+<p>Since TIM2 is running at 10000 counts/ms, and the main loop updates if <code>(time_change &gt;= 10000)</code>, the update rate is 1 Hz. The update rate and sampling frequency can be calculated using the following formula:</p>
+<p><span class="math inline">\(T_{update} = \frac{1}{ \frac{time\_change}{10000}}\)</span> = 1 <span class="math inline">\(f_{update} = \frac{1}{T_{update}}\)</span> = 1 Hz</p>
+</section>
+</section>
+<section id="flowchart" class="level3">
+<h3 class="anchored" data-anchor-id="flowchart">Flowchart</h3>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see Lab 5 Flowchart">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Expand to see Lab 5 Flowchart
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab5_images/lab5_fc.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Flowchart of the Main Loop and Interrupt Handler</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<section id="interrupt-based-code-vs.-manual-polling" class="level4">
+<h4 class="anchored" data-anchor-id="interrupt-based-code-vs.-manual-polling">Interrupt-Based Code vs.&nbsp;Manual Polling</h4>
+<p>As indicated by the counts below, the manual polling code is not able to keep up with the encouder pulses at high speeds, resulting in missing counts and inaccurate speed measurements. The interrupt-based code, on the other hand, is able to accurately count the encoder pulses and calculate the speed of the motor.</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Interrupt-Based Code Counts</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Direction: CCW, Velocity: 2.852329 rev/sec, Count: 4655</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Direction: CCW, Velocity: 2.848039 rev/sec, Count: 4648</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Direction: CCW, Velocity: 2.851716 rev/sec, Count: 4654</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Direction: CCW, Velocity: 2.852941 rev/sec, Count: 4656</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Direction: CCW, Velocity: 2.851716 rev/sec, Count: 4654</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Manual Polling Code Counts</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Count: -4621</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Count: -4620</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Count: -4636</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Count: -4646</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Count: -4646</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>The design successfully implemented the intended functionality of using interrupts to read from a quadrature encoder and calculate the speed of a motor. The measured velcoity at 12V was 2.85 rev/sec, which is consistent with the expected speed of the motor.</p>
+</section>
+<section id="ai-prototype-summary" class="level1">
+<h1>AI Prototype Summary</h1>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Expand to see C code generated by Gemini">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Expand to see C code generated by Gemini
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>/#include "stm32l4xx_hal.h"
+
+/* Global Encoder Counter */
+volatile int32_t g_encoder_count = 0;
+
+/* Private Function Prototypes */
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void Error_Handler(void);
+
+int main(void)
+{
+    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+    HAL_Init();
+
+    /* Configure the system clock (80 MHz) */
+    SystemClock_Config();
+
+    /* Initialize GPIOs and Interrupts for PA0 and PA1 */
+    MX_GPIO_Init();
+
+    while (1)
+    {
+        /* Access 'g_encoder_count' anywhere in your main loop */
+        // Example: int32_t current_pos = g_encoder_count;
+    }
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    /* Enable GPIOA Clock */
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+
+    /* Configure PA0 (Channel A) and PA1 (Channel B) as EXTI Rising/Falling */
+    GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLUP; // Change to GPIO_NOPULL if external pull-ups exist
+    HAL_GPIO_Init(GPIOA, &amp;GPIO_InitStruct);
+
+    /* EXTI interrupt init for PA0 */
+    HAL_NVIC_SetPriority(EXTI0_IRQn, 2, 0);
+    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+    /* EXTI interrupt init for PA1 */
+    HAL_NVIC_SetPriority(EXTI1_IRQn, 2, 0);
+    HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+}
+
+/**
+  * @brief Interrupt Service Routine for EXTI Line 0 (PA0)
+  */
+void EXTI0_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+}
+
+/**
+  * @brief Interrupt Service Routine for EXTI Line 1 (PA1)
+  */
+void EXTI1_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+}
+
+/**
+  * @brief EXTI line detection callback
+  * @param GPIO_Pin Specfies the pin connected to the EXTI line
+  */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == GPIO_PIN_0 || GPIO_Pin == GPIO_PIN_1)
+    {
+        static uint8_t last_state = 0;
+
+        /* Read current state of both channels */
+        uint8_t chA = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) ? 1 : 0;
+        uint8_t chB = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) == GPIO_PIN_SET) ? 1 : 0;
+        uint8_t current_state = (chA &lt;&lt; 1) | chB;
+
+        /* Quadrature state transition lookup table (4x decoding)
+         * Index formed by: (last_state &lt;&lt; 2) | current_state
+         *  0: No move
+         * +1: Clockwise step
+         * -1: Counter-clockwise step
+         */
+        static const int8_t quad_table[16] = {
+             0, -1,  1,  0,
+             1,  0,  0, -1,
+            -1,  0,  0,  1,
+             0,  1, -1,  0
+        };
+
+        uint8_t index = ((last_state &amp; 0x03) &lt;&lt; 2) | (current_state &amp; 0x03);
+        g_encoder_count += quad_table[index];
+
+        last_state = current_state;
+    }
+}
+
+/**
+  * @brief System Clock Configuration (80 MHz SYSCLK using HSI/PLL)
+  */
+void SystemClock_Config(void)
+{
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+    /** Configure the main internal regulator output voltage */
+    if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    /** Initializes the RCC Oscillators */
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+    RCC_OscInitStruct.PLL.PLLM = 1;
+    RCC_OscInitStruct.PLL.PLLN = 10;
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
+    RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+    RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+    if (HAL_RCC_OscConfig(&amp;RCC_OscInitStruct) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    /** Initializes the CPU, AHB and APB buses clocks */
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+    if (HAL_RCC_ClockConfig(&amp;RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+    {
+        Error_Handler();
+    }
+}
+
+/**
+  * @brief SysTick Interrupt Handler required by HAL
+  */
+void SysTick_Handler(void)
+{
+    HAL_IncTick();
+}
+
+static void Error_Handler(void)
+{
+    __disable_irq();
+    while (1)
+    {
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<p>The LLM-generated code was not able to build because the header file ‘stm32l4xx_hal.h’ was not found.</p>
+<p>The LLM-generated code that uses the STM32 HAL library to configure GPIO interrupts for reading a quadrature encoder, and the encoder ISR defines a static constnat 2D array to implement a quadrature state transition lookup table for 4x decoding. The ISR reads the current state of both channels, calculates the index into the lookup table, and updates the global encoder count accordingly. This is different and more efficient than my original implementation that uses if-else statements to determine the direction of rotation and update the encoder count.</p>
+<p>The LLM advised using Hardware Timer Encoder Mode (TIM1 / TIM2) over GPIO interrupts because hardware counters perform 4x quadrature decoding directly in silicon without triggering CPU interrupts, eliminating step-loss at high RPMs. My reasoning for using TIM2 is that it is a 32-bit timer, which allows for a larger range of counts before overflow, and it is also a general-purpose timer that can be used for other purposes in the future.</p>
+<p>The LLM does not provide that much explanation that justified its design choices (i.e.&nbsp;choosing which timer and which GPIO pins), but what it does provide is a good starting point for implementing a quadrature encoder using interrupts.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

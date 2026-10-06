@@ -161,6 +161,7 @@ window.Quarto = {
   <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
   <ul class="collapse">
   <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#calculations" id="toc-calculations" class="nav-link" data-scroll-target="#calculations">Calculations</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#ai-prototype-summary" id="toc-ai-prototype-summary" class="nav-link" data-scroll-target="#ai-prototype-summary">AI Prototype Summary</a></li>
@@ -224,6 +225,9 @@ window.Quarto = {
 </div>
 </div>
 </div>
+</section>
+<section id="calculations" class="level3">
+<h3 class="anchored" data-anchor-id="calculations">Calculations</h3>
 <section id="frequency-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="frequency-calculations">Frequency Calculations</h4>
 <p>Frequency can be calculated by the following formula, where PSC is the prescaler value and ARR is the auto-reload register value: <span class="math display">\[f_{PWM} = \frac{f_{timer}}{(PSC + 1) * (ARR + 1)}\]</span></p>
@@ -246,9 +250,9 @@ window.Quarto = {
 <section id="minimummaximum-duration-supported" class="level4">
 <h4 class="anchored" data-anchor-id="minimummaximum-duration-supported">Minimum/Maximum Duration Supported</h4>
 <p>The shortest duration is one period. Since maximum frequency supported is 500 kHz, the shortest duration is 1 ms since duration is initialized as a 32-bit integer in ms units : <span class="math display">\[t_{min} = \frac{1}{500 kHz} = 2 μs\rightarrow 1 ms\]</span></p>
-<p>The maximum duration is limited by the 32-bit calculation <code>duration * 1000</code>, which becomes:ARR</p>
+<p>The maximum duration is limited by the 32-bit calculation <code>duration * 1000</code>, which becomes:</p>
 <p><span class="math display">\[t_{max} = \frac{2^{32}}{1000} \approx 4{,}294{,}967\ \text{ms} \approx 71.6\ \text{min}.\]</span></p>
-<p>Checking 220 HZ and 100 HZ isn’t sufficient to prove all notes are within error bounds. The frequency error comes from the truncation during calculation, so it depends on whether the clocks 1 Mhz can divde the given frequency divides “nicely” with a small rounding error.</p>
+<p>Checking 220 HZ and 100 HZ isn’t sufficient to prove all notes are within error bounds. The frequency error comes from the truncation during calculation, so it depends on whether the clock’s 1 Mhz can divde the given frequency divides “nicely” with a small rounding error.</p>
 </section>
 </section>
 </section>
