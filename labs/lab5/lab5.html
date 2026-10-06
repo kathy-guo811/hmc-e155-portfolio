@@ -275,7 +275,8 @@ window.Quarto = {
 <section id="update-rate-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="update-rate-calculations">Update Rate Calculations</h4>
 <p>Since TIM2 is running at 10000 counts/ms, and the main loop updates if <code>(time_change &gt;= 10000)</code>, the update rate is 1 Hz. The update rate and sampling frequency can be calculated using the following formula:</p>
-<p><span class="math inline">\(T_{update} = \frac{1}{ \frac{time\_change}{10000}}\)</span> = 1 <span class="math inline">\(f_{update} = \frac{1}{T_{update}}\)</span> = 1 Hz</p>
+<p><span class="math display">\[T_{update} = \frac{1}{ \frac{time\_change}{10000}} = 1\]</span></p>
+<p><span class="math display">\[f_{update} = \frac{1}{T_{update}} = 1 Hz\]</span></p>
 </section>
 </section>
 <section id="flowchart" class="level3">
