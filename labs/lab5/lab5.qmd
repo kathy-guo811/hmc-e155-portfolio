@@ -36,8 +36,9 @@ $$v = \frac{count\_change}{ \frac{time\_change}{10000}*COUNTS\_PER\_REV}$$
 #### Update Rate Calculations
 Since TIM2 is running at 10000 counts/ms, and the main loop updates if `(time_change >= 10000)`, the update rate is 1 Hz. The update rate and sampling frequency can be calculated using the following formula:
 
-$T_{update} = \frac{1}{ \frac{time\_change}{10000}}$ = 1 
-$f_{update} = \frac{1}{T_{update}}$ = 1 Hz
+$$T_{update} = \frac{1}{ \frac{time\_change}{10000}} = 1$$
+
+$$f_{update} = \frac{1}{T_{update}} = 1 Hz$$
 
 ### Flowchart
 
